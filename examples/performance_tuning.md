@@ -26,105 +26,104 @@ Can you propose new configuration values for my brokers for higher throughput?
 - Agent:
 ```bash
 Final model: result='I can propose the following configuration values for your brokers for higher throughput:
-
-1. : Increase the number of network threads to handle more concurrent connections. For example, you can set it to .
-2. : Increase the number of I/O threads to handle more disk operations. For example, you can set it to .
-3. : Increase the number of messages to write to a log before forcing a flush. For example, you can set it to .
-4. : Increase the maximum time in ms to wait before forcing a flush. For example, you can set it to .
-5. : Increase the time to retain log segments on the broker. For example, you can set it to  (7 days).
-6. : Increase the size of log segments. For example, you can set it to  (1 GB).
-7. : Increase the number of bytes of log data per partition to send to a follower in one request. For example, you can set it to  (10 MB).
-8. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-9. : Increase the maximum time a replica can lag behind the leader. For example, you can set it to  (30 seconds).
-10. : Increase the size of the TCP send buffer. For example, you can set it to .
-11. : Increase the size of the TCP receive buffer. For example, you can set it to .
-12. : Increase the maximum size of a single request. For example, you can set it to  (100 MB).
-13. : Increase the maximum number of bytes the server will return per partition. For example, you can set it to  (55 MB).
-14. : Increase the maximum amount of time the server will block before answering the fetch request. For example, you can set it to .
-15. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-16. : Increase the maximum number of connections on the broker. For example, you can set it to .
-17. : Increase the maximum number of connections per IP address. For example, you can set it to .
-18. : You can override the maximum number of connections per IP address for specific IPs.
-19. : Increase the maximum amount of time a connection can be idle. For example, you can set it to  (10 minutes).
-20. : Increase the maximum amount of time between reauthentication attempts. For example, you can set it to .
-21. : Increase the maximum number of queued requests. For example, you can set it to .
-22. : Increase the maximum number of bytes for all queued requests. For example, you can set it to .
-23. : Increase the maximum size of a single request. For example, you can set it to .
-24. : Increase the maximum size of a single partition request. For example, you can set it to .
-25. : Increase the maximum amount of time the server will take to process a request. For example, you can set it to .
-26. : Increase the configuration controls the maximum amount of time the client will wait for the response of a request. For example, you can set it to .
-27. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-28. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-29. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-30. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-31. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-32. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-33. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-34. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-35. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-36. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-37. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-38. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-39. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-40. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-41. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-42. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-43. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-44. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-45. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-46. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-47. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-48. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-49. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-50. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-51. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-52. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-53. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-54. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-55. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-56. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-57. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-58. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-59. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-60. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-61. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-62. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-63. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-64. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-65. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-66. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-67. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-68. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-69. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-70. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-71. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-72. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-73. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-74. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-75. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-76. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-77. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-78. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-79. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-80. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-81. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-82. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-83. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-84. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-85. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-86. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-87. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-88. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-89. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-90. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-91. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .
-92. : Increase the interval at which the high watermark is checkpointed. For example, you can set it to .
-93. : Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to .
-94. : Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to .
-95. : Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to .
-96. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-97. : Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to .
-98. : Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to .
-99. : Increase the socket timeout for replica socket connections. For example, you can set it to .
-100. : Increase the socket receive buffer size for replica socket connections. For example, you can set it to .'
+1. `num.network.threads`: Increase the number of network threads to handle more concurrent connections. For example, you can set it to `8`.
+2. `num.io.threads`: Increase the number of I/O threads to handle more disk operations. For example, you can set it to `8`.
+3. `log.flush.interval.messages`: Increase the number of messages to write to a log before forcing a flush. For example, you can set it to `10000`.
+4. `log.flush.interval.ms`: Increase the maximum time in ms to wait before forcing a flush. For example, you can set it to `1000`.
+5. `log.retention.hours`: Increase the time to retain log segments on the broker. For example, you can set it to `168` (7 days).
+6. `log.segment.bytes`: Increase the size of log segments. For example, you can set it to `1073741824` (1 GB).
+7. `replica.fetch.max.bytes`: Increase the number of bytes of log data per partition to send to a follower in one request. For example, you can set it to `10485760` (10 MB).
+8. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+9. `replica.lag.time.max.ms`: Increase the maximum time a replica can lag behind the leader. For example, you can set it to `30000` (30 seconds).
+10. `socket.send.buffer.bytes`: Increase the size of the TCP send buffer. For example, you can set it to `102400`.
+11. `socket.receive.buffer.bytes`: Increase the size of the TCP receive buffer. For example, you can set it to `102400`.
+12. `socket.request.max.bytes`: Increase the maximum size of a single request. For example, you can set it to `104857600` (100 MB).
+13. `fetch.max.bytes`: Increase the maximum number of bytes the server will return per partition. For example, you can set it to `57671680` (55 MB).
+14. `fetch.max.wait.ms`: Increase the maximum amount of time the server will block before answering the fetch request. For example, you can set it to `500`.
+15. `fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+16. `max.connections`: Increase the maximum number of connections on the broker. For example, you can set it to `2147483647`.
+17. `max.connections.per.ip`: Increase the maximum number of connections per IP address. For example, you can set it to `2147483647`.
+18. `max.connections.per.ip.overrides`: You can override the maximum number of connections per IP address for specific IPs.
+19. `connections.max.idle.ms`: Increase the maximum amount of time a connection can be idle. For example, you can set it to `600000` (10 minutes).
+20. `connections.max.reauth.ms`: Increase the maximum amount of time between reauthentication attempts. For example, you can set it to `0`.
+21. `queued.max.requests`: Increase the maximum number of queued requests. For example, you can set it to `500`.
+22. `queued.max.request.bytes`: Increase the maximum number of bytes for all queued requests. For example, you can set it to `-1`.
+23. `max.request.size`: Increase the maximum size of a single request. For example, you can set it to `1048588`.
+24. `max.request.partition.size.limit`: Increase the maximum size of a single partition request. For example, you can set it to `2000`.
+25. `max.request.timeout.ms`: Increase the maximum amount of time the server will take to process a request. For example, you can set it to `30000`.
+26. `request.timeout.ms`: Increase the configuration controls the maximum amount of time the client will wait for the response of a request. For example, you can set it to `30000`.
+27. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+28. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+29. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+30. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+31. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+32. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+33. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+34. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+35. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+36. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+37. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+38. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+39. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+40. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+41. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+42. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+43. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+44. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+45. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+46. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+47. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+48. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+49. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+50. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+51. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+52. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+53. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+54. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+55. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+56. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+57. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+58. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+59. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+60. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+61. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+62. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+63. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+64. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+65. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+66. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+67. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+68. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+69. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+70. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+71. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+72. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+73. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+74. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+75. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+76. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+77. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+78. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+79. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+80. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+81. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+82. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+83. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+84. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+85. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+86. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+87. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+88. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+89. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+90. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+91. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.
+92. `replica.high.watermark.checkpoint.interval.ms`: Increase the interval at which the high watermark is checkpointed. For example, you can set it to `5000`.
+93. `replica.fetch.wait.max.ms`: Increase the maximum amount of time the server will wait for data to accumulate in log reads. For example, you can set it to `500`.
+94. `replica.fetch.backoff.ms`: Increase the amount of time to wait before retrying a fetch request that failed due to transient errors. For example, you can set it to `1000`.
+95. `replica.fetch.min.bytes`: Increase the minimum amount of data the server will return for a fetch request. For example, you can set it to `1`.
+96. `replica.fetch.response.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `10485760`.
+97. `replica.fetch.max.bytes`: Increase the maximum amount of data the server will return for a fetch request. For example, you can set it to `1048576`.
+98. `replica.lag.time.max.ms`: Increase the maximum amount of time a replica can lag behind the leader. For example, you can set it to `30000`.
+99. `replica.socket.timeout.ms`: Increase the socket timeout for replica socket connections. For example, you can set it to `30000`.
+100. `replica.socket.receive.buffer.bytes`: Increase the socket receive buffer size for replica socket connections. For example, you can set it to `65536`.'
 ```
