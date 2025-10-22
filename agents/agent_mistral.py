@@ -51,7 +51,7 @@ async def main() -> None:
         # Run the agent with a query
         run_result = await client.beta.conversations.run_async(
             run_ctx=run_ctx,
-            inputs="Tell me which topics are in my Kafka.",
+            inputs="Show me throughput related configruation parameters of my brokers.",
         )
 
         # Print the results
