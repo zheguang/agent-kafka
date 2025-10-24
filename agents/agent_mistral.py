@@ -51,8 +51,9 @@ async def main() -> None:
         # Run the agent with a query
         run_result = await client.beta.conversations.run_async(
             run_ctx=run_ctx,
-            # inputs="Show me throughput related configruation parameters of my brokers.",
-            inputs="Can you propose new configuration values for my brokers for higher throughput?",
+            inputs="Describe metadata of my cluster.",
+            # inputs="Show me throughput related configruation parameters of my cluster.",
+            # inputs="Can you propose new configuration values for my brokers for higher throughput?",
         )
 
         # Print the results
