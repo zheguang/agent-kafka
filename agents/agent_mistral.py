@@ -11,7 +11,7 @@ from pathlib import Path
 
 # Set the current working directory and model to use
 cwd = Path(__file__).parent
-MODEL = "mistral-small-latest"
+MODEL = "mistral-large-latest"
 
 async def main() -> None:
     # Initialize the Mistral client with your API key
@@ -51,9 +51,10 @@ async def main() -> None:
         # Run the agent with a query
         run_result = await client.beta.conversations.run_async(
             run_ctx=run_ctx,
-            inputs="Describe metadata of my cluster.",
+            # inputs="Describe metadata of my cluster.",
             # inputs="Show me throughput related configruation parameters of my cluster.",
             # inputs="Can you propose new configuration values for my brokers for higher throughput?",
+            inputs="Create a table for topic 'lineitem'. Then select from the topic table 'lineitem' for rows of order id 'o1'",
         )
 
         # Print the results

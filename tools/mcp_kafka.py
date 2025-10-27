@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 import asyncio
+import duckdb
 import json
 import logging
 
@@ -7,9 +8,12 @@ from mcp.server.fastmcp import FastMCP
 from kafka import KafkaAdminClient
 from kafka.admin import ConfigResource, ConfigResourceType
 from pydantic import BaseModel, Field
-from typing import Annotated, Literal
+from typing import Annotated, Literal, Optional
 
 MCP_SERVER_NAME="kafka"
+DB_FILE="kafka-db"
+
+KAFKA_BOOTSTRAP_SERVERS=["localhost:9092"]
 
 # Set up logging
 logging.basicConfig(
@@ -20,11 +24,19 @@ log = logging.getLogger(MCP_SERVER_NAME)
 # Initialize MCP server
 mcp = FastMCP(MCP_SERVER_NAME)
 
+def create_database() -> duckdb.DuckDBPyConnection:
+    db = duckdb.connect(DB_FILE)
+    db.execute("INSTALL tributary FROM community; LOAD tributary;")
+    return db
+
+# Initialize database for persistence
+db = create_database()
+
 def create_admin_client() -> KafkaAdminClient:
     log.info("Creating Kakfa client connection")
 
     try:
-        admin = KafkaAdminClient(bootstrap_servers=["localhost:9092"], client_id="mcp-kafka")
+        admin = KafkaAdminClient(bootstrap_servers=KAFKA_BOOTSTRAP_SERVERS, client_id="mcp-kafka")
         # Test the connection
         cluster_metadata = admin.describe_cluster()
         log.info(f"Successfully connected to Kafka server version {cluster_metadata}")
@@ -35,6 +47,15 @@ def create_admin_client() -> KafkaAdminClient:
 
 # Initialize admin client
 admin = create_admin_client()
+
+# Initialize schema cache, hardcoded for now
+schemas = { 
+    "lineitem": {
+        "timestamp": "varchar",
+        "order_id": "varchar",
+        "part_id": "varchar"
+    }
+}
 
 class ConfigResourceInput(BaseModel):
     """Pydantic model representing a Kakfa ConfigResource"""
@@ -90,6 +111,50 @@ async def describe_configs(resources: list[ConfigResourceInput]) -> list[dict]:
     resources = [r.to_object()['resources'] for r in result]
     return resources
 
+@mcp.tool()
+def describe_topic_schema(topic: str) -> dict:
+    """Describe the schema of a Kafka topic's messages."""
+    return schemas[topic]
+
+@mcp.tool()
+async def create_topic_table(topic: str) -> bool:
+    """Create a table view over the topic's messages."""
+    with db.cursor() as cursor:
+        cursor.execute(f"""
+            CREATE VIEW IF NOT EXISTS {topic}_raw AS
+                SELECT *
+                EXCLUDE message,
+                decode(message)::json AS message
+                FROM tributary_scan_topic('{topic}', "bootstrap.servers" := '{",".join(KAFKA_BOOTSTRAP_SERVERS)}');
+        """)
+
+        schema = schemas[topic]
+        projection = ','.join([f"(message ->> '$.{attr}'::{type_name}) AS {attr}" for attr, type_name in schema.items()])
+
+        view = f"""
+            CREATE VIEW IF NOT EXISTS {topic}_table AS
+                SELECT {projection}
+                FROM {topic}_raw
+        """
+        log.debug(view)
+        cursor.execute(view)
+        return True
+
+@mcp.tool()
+async def query_topic_table(topic: str, filter_predicate: Optional[str], limit: Optional[int]) -> list:
+    """Query the topic table by filter and limit"""
+    where_clause = "" if filter_predicate is None else f"WHERE {filter_predicate}"
+    limit_clause = "" if limit is None else f"LIMIT {limit}"
+    query = f"""
+            SELECT * 
+            FROM {topic}_table
+            {where_clause}
+            {limit_clause}
+        """
+    with db.cursor() as cursor:
+        return cursor.sql(query).fetchall()
+
+
 def as_json(result, transform=lambda x: x) -> str:
     # Convert newline-separated string to list and trim whitespace
     if isinstance(result, str):
@@ -102,7 +167,6 @@ def as_json(result, transform=lambda x: x) -> str:
 
 def run_stdio_server():
     mcp.run(transport="stdio")
-
 
 if __name__ == "__main__":
     run_stdio_server()
