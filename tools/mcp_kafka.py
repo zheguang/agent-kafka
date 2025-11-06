@@ -11,7 +11,7 @@ from pydantic import BaseModel, Field
 from typing import Annotated, Literal, Optional
 
 MCP_SERVER_NAME="kafka"
-DB_FILE="kafka-db"
+DB_FILE="kafka-db.tmp"
 
 KAFKA_BOOTSTRAP_SERVERS=["localhost:9092"]
 

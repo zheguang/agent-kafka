@@ -1,7 +1,9 @@
 #!/usr/bin/env python
 import asyncio
 import os
+import mistralai
 
+from contextlib import contextmanager
 from mcp import StdioServerParameters
 from mistralai import Mistral
 from mistralai.extra.run.context import RunContext
@@ -48,21 +50,36 @@ async def main() -> None:
         mcp_client = MCPClientSTDIO(stdio_params=server_params)
         await run_ctx.register_mcp_client(mcp_client=mcp_client)
 
-        # Run the agent with a query
-        run_result = await client.beta.conversations.run_async(
-            run_ctx=run_ctx,
-            # inputs="Describe metadata of my cluster.",
-            # inputs="Show me throughput related configruation parameters of my cluster.",
-            # inputs="Can you propose new configuration values for my brokers for higher throughput?",
-            inputs="Create a table for topic 'lineitem'. Then select from the topic table 'lineitem' for rows of order id 'o1'",
-        )
+        async def query(message):
+            # Run the agent with a query
+            run_result = await client.beta.conversations.run_async(
+                run_ctx=run_ctx,
+                # inputs="Describe metadata of my cluster.",
+                # inputs="Show me throughput related configruation parameters of my cluster.",
+                # inputs="Can you propose new configuration values for my brokers for higher throughput?",
+                # inputs="Create a table for topic 'lineitem'. Then select from the topic table 'lineitem' for rows of order id 'o1'",
+                inputs=message,
+            )
 
-        # Print the results
-        print("All run entries:")
-        for entry in run_result.output_entries:
-            print(f"{entry}")
-            print()
-        print(f"Final model: {run_result.output_as_model}")
+            # Print the results
+            print("All run entries:")
+            for entry in run_result.output_entries:
+                print(f"{entry}")
+                print()
+            print(f"Final model: {run_result.output_as_model}")
+
+        def collect_user_input():
+            print("")
+            return input("YOU: ")
+
+        while True:
+            try:
+                message = collect_user_input()
+                await query(message)
+            except KeyboardInterrupt:
+                self.exit()
+
+            
 
 if __name__ == "__main__":
     asyncio.run(main())
