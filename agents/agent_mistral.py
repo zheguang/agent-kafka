@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Set the current working directory and model to use
 cwd = Path(__file__).parent
-MODEL = "mistral-large-latest"
+MODEL = "mistral-medium-latest"
 
 async def main() -> None:
     # Initialize the Mistral client with your API key
@@ -31,7 +31,7 @@ async def main() -> None:
     agent = client.beta.agents.create(
         model=MODEL,
         name="Kafka operator",
-        instructions="You are able to operate Kakfa.",
+        instructions="You are able to operate Kakfa using the tools provided.",
         description="",
     )
 
@@ -51,22 +51,18 @@ async def main() -> None:
         await run_ctx.register_mcp_client(mcp_client=mcp_client)
 
         async def query(message):
-            # Run the agent with a query
+            # Run the agent with a query added to the conversation in the context
             run_result = await client.beta.conversations.run_async(
                 run_ctx=run_ctx,
-                # inputs="Describe metadata of my cluster.",
-                # inputs="Show me throughput related configruation parameters of my cluster.",
-                # inputs="Can you propose new configuration values for my brokers for higher throughput?",
-                # inputs="Create a table for topic 'lineitem'. Then select from the topic table 'lineitem' for rows of order id 'o1'",
                 inputs=message,
             )
 
             # Print the results
-            print("All run entries:")
-            for entry in run_result.output_entries:
-                print(f"{entry}")
-                print()
-            print(f"Final model: {run_result.output_as_model}")
+            #print("All run entries:")
+            #for entry in run_result.output_entries:
+            #    print(f"{entry}")
+            #    print()
+            print(f"Agent: {run_result.output_as_model}")
 
         def collect_user_input():
             print("")

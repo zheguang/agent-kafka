@@ -92,7 +92,7 @@ async def list_topics() -> str:
 @mcp.tool()
 async def create_topics(new_topics: list[str]) -> str:
     """Create new Kafka topics"""
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.create_topics, new_topics=new_topics)
+    result = await asyncio.get_event_loop().run_in_executor(None, admin.create_topics, new_topics)
     return as_json(result)
 
 @mcp.tool()
@@ -102,10 +102,10 @@ async def describe_cluster() -> str:
     return as_json(result)
 
 @mcp.tool()
-async def describe_configs(resources: list[ConfigResourceInput]) -> list[dict]:
+async def describe_configs(resource_input: list[ConfigResourceInput]) -> list[dict]:
     """Describe configuration for one or more Kafka resources."""
-    config_resources = [r.to_config_resource() for r in resources]
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.describe_configs(config_resources=config_resources))
+    config_resources = [r.to_config_resource() for r in resource_input]
+    result = await asyncio.get_event_loop().run_in_executor(None, admin.describe_configs, config_resources)
 
     # convert result to list of dicts
     resources = [r.to_object()['resources'] for r in result]
