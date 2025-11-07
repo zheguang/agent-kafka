@@ -10,8 +10,8 @@ from kafka.admin import ConfigResource, ConfigResourceType
 from pydantic import BaseModel, Field
 from typing import Annotated, Literal, Optional
 
-MCP_SERVER_NAME="kafka"
-DB_FILE="kafka-db.tmp"
+MCP_SERVER_NAME="mcp_kafka"
+DB_FILE="db-kafka.tmp"
 
 KAFKA_BOOTSTRAP_SERVERS=["localhost:9092"]
 

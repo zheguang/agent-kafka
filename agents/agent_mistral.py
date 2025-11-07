@@ -1,9 +1,11 @@
 #!/usr/bin/env python
 import asyncio
-import os
+import logging
 import mistralai
+import os
 
-from contextlib import contextmanager
+from contextlib import asynccontextmanager
+from dataclasses import dataclass
 from mcp import StdioServerParameters
 from mistralai import Mistral
 from mistralai.extra.run.context import RunContext
@@ -11,71 +13,85 @@ from mistralai.extra.mcp.stdio import MCPClientSTDIO
 from mistralai.types import BaseModel
 from pathlib import Path
 
-# Set the current working directory and model to use
+logging.basicConfig(
+    level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+)
+log = logging.getLogger("agent_mistral")
+
+# Set the current working directory
 cwd = Path(__file__).parent
-MODEL = "mistral-medium-latest"
+
+# Define the expected output format for the results
+@dataclass
+class AgentOutput(BaseModel):
+    result: str
+
+# An agent with a running context for conversations and tools
+@dataclass
+class AgentContext:
+    client: Mistral
+    run_context: RunContext
+
+    async def query(self, message):
+        # Run the agent with a query added to the conversation in the context
+        run_result = await self.client.beta.conversations.run_async(
+            run_ctx=self.run_context,
+            inputs=message,
+        )
+        print(f"Agent: {run_result.output_as_model}")
+
+# An agency that can create agents with contexts
+class Agency:
+    def __init__(self):
+        self.api_key = os.environ["MISTRAL_API_KEY"]
+        self.model= "mistral-medium-latest"
+        self.client = Mistral(self.api_key)
+
+        self.mcp_params = StdioServerParameters(
+            command="python",
+            args=[str((cwd / "../tools/mcp_kafka.py").resolve())],
+            env=None,
+        )
+
+        self.agent = self.client.beta.agents.create(
+            model=self.model,
+            name="Kafka operator",
+            instructions="You are able to operate Kakfa using the tools provided.",
+            description="",
+        )
+
+    @asynccontextmanager
+    async def agent_context(self) -> AgentContext:
+        async with RunContext(
+            agent_id=self.agent.id,
+            output_format=AgentOutput,
+            continue_on_fn_error=True,
+        ) as run_ctx:
+            # Create and register an MCP client with the run context
+            mcp_client = MCPClientSTDIO(stdio_params=self.mcp_params)
+            await run_ctx.register_mcp_client(mcp_client=mcp_client)
+
+            try:
+                yield AgentContext(self.client, run_ctx)
+            finally:
+                log.info("Finishing agent context.")
+
+def collect_user_input():
+    print("")
+    return input("YOU: ")
 
 async def main() -> None:
-    # Initialize the Mistral client with your API key
-    api_key = os.environ["MISTRAL_API_KEY"]
-    client = Mistral(api_key)
-
-    # Define parameters for the local MCP server
-    server_params = StdioServerParameters(
-        command="python",
-        args=[str((cwd / "../tools/mcp_kafka.py").resolve())],
-        env=None,
-    )
-
-    # Create an agent 
-    agent = client.beta.agents.create(
-        model=MODEL,
-        name="Kafka operator",
-        instructions="You are able to operate Kakfa using the tools provided.",
-        description="",
-    )
-
-    # Define the expected output format for the results
-    class AgentOutput(BaseModel):
-        result: str
-
-    # Create a run context for the agent
-    async with RunContext(
-        agent_id=agent.id,
-        output_format=AgentOutput,
-        continue_on_fn_error=True,
-    ) as run_ctx:
-
-        # Create and register an MCP client with the run context
-        mcp_client = MCPClientSTDIO(stdio_params=server_params)
-        await run_ctx.register_mcp_client(mcp_client=mcp_client)
-
-        async def query(message):
-            # Run the agent with a query added to the conversation in the context
-            run_result = await client.beta.conversations.run_async(
-                run_ctx=run_ctx,
-                inputs=message,
-            )
-
-            # Print the results
-            #print("All run entries:")
-            #for entry in run_result.output_entries:
-            #    print(f"{entry}")
-            #    print()
-            print(f"Agent: {run_result.output_as_model}")
-
-        def collect_user_input():
-            print("")
-            return input("YOU: ")
-
-        while True:
+    agency = Agency()
+    async with agency.agent_context() as agent:
+        done = False
+        while not done:
             try:
                 message = collect_user_input()
-                await query(message)
-            except KeyboardInterrupt:
-                self.exit()
-
-            
+                await agent.query(message)
+            except (EOFError, KeyboardInterrupt) as e:
+                log.info(f"Recieved {e.__class__.__name__}. Existing.")
+                done = True
+    print("\nAI: Bye!")
 
 if __name__ == "__main__":
     asyncio.run(main())
