@@ -38,7 +38,7 @@ class AgentContext:
             run_ctx=self.run_context,
             inputs=message,
         )
-        print(f"Agent: {run_result.output_as_model}")
+        print(f"🤖: {run_result.output_as_model}")
 
 # An agency that can create agents with contexts
 class Agency:
@@ -78,7 +78,7 @@ class Agency:
 
 def collect_user_input():
     print("")
-    return input("YOU: ")
+    return input("😐: ")
 
 async def main() -> None:
     agency = Agency()
@@ -91,7 +91,7 @@ async def main() -> None:
             except (EOFError, KeyboardInterrupt) as e:
                 log.info(f"Recieved {e.__class__.__name__}. Existing.")
                 done = True
-    print("\nAI: Bye!")
+    print("\n🤖: 👋")
 
 if __name__ == "__main__":
     asyncio.run(main())

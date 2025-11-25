@@ -132,7 +132,7 @@ async def create_topic_table(topic: str) -> bool:
         projection = ','.join([f"(message ->> '$.{attr}'::{type_name}) AS {attr}" for attr, type_name in schema.items()])
 
         view = f"""
-            CREATE VIEW IF NOT EXISTS {topic}_table AS
+            CREATE VIEW IF NOT EXISTS {topic} AS
                 SELECT {projection}
                 FROM {topic}_raw
         """
@@ -141,19 +141,11 @@ async def create_topic_table(topic: str) -> bool:
         return True
 
 @mcp.tool()
-async def query_topic_table(topic: str, filter_predicate: Optional[str], limit: Optional[int]) -> list:
-    """Query the topic table by filter and limit"""
-    where_clause = "" if filter_predicate is None else f"WHERE {filter_predicate}"
-    limit_clause = "" if limit is None else f"LIMIT {limit}"
-    query = f"""
-            SELECT * 
-            FROM {topic}_table
-            {where_clause}
-            {limit_clause}
-        """
+async def query_topic_table(query: str) -> list:
+    """Query the topic table as SQL"""
+    log.info(f"Running query: {query}")
     with db.cursor() as cursor:
         return cursor.sql(query).fetchall()
-
 
 def as_json(result, transform=lambda x: x) -> str:
     # Convert newline-separated string to list and trim whitespace
