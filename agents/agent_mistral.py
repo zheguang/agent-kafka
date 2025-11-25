@@ -3,6 +3,7 @@ import asyncio
 import logging
 import mistralai
 import os
+import readline
 
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
