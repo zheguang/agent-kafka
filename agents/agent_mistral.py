@@ -48,16 +48,27 @@ class Agency:
         self.model= "mistral-medium-latest"
         self.client = Mistral(self.api_key)
 
-        self.mcp_params = StdioServerParameters(
+        # MCP server parameters for Kafka operations
+        self.mcp_kafka_params = StdioServerParameters(
             command="python",
             args=[str((cwd / "../tools/mcp_kafka.py").resolve())],
             env=None,
         )
 
+        # MCP server parameters for plotting
+        self.mcp_plot_params = StdioServerParameters(
+            command="python",
+            args=[str((cwd / "../tools/mcp_plot.py").resolve())],
+            env=None,
+        )
+
         self.agent = self.client.beta.agents.create(
             model=self.model,
-            name="Kafka operator",
-            instructions="You are able to operate Kakfa using the tools provided.",
+            name="Kafka operator with plotting",
+            instructions="You are able to operate Kafka using the tools provided. "
+                        "You can query Kafka topics and visualize the results with plots. "
+                        "When asked to create plots, first use query_topic_table to get the data, "
+                        "then use generate_plot to visualize it.",
             description="",
         )
 
@@ -68,9 +79,12 @@ class Agency:
             output_format=AgentOutput,
             continue_on_fn_error=True,
         ) as run_ctx:
-            # Create and register an MCP client with the run context
-            mcp_client = MCPClientSTDIO(stdio_params=self.mcp_params)
-            await run_ctx.register_mcp_client(mcp_client=mcp_client)
+            # Create and register MCP clients for both Kafka and plotting
+            mcp_kafka_client = MCPClientSTDIO(stdio_params=self.mcp_kafka_params)
+            mcp_plot_client = MCPClientSTDIO(stdio_params=self.mcp_plot_params)
+
+            await run_ctx.register_mcp_client(mcp_client=mcp_kafka_client)
+            await run_ctx.register_mcp_client(mcp_client=mcp_plot_client)
 
             try:
                 yield AgentContext(self.client, run_ctx)
