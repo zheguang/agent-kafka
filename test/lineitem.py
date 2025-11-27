@@ -24,6 +24,13 @@ def generate_lineitems():
         } 
     )
 
+    producer.send("lineitem", value={ 
+            "timestamp": datetime.now().isoformat(), 
+            "order_id": "o2",
+            "part_id": "p1",
+        } 
+    )
+
 
 if __name__ == "__main__":
     generate_lineitems()

@@ -1,0 +1,11 @@
+# Core MCP and Kafka dependencies
+fastmcp
+kafka-python
+mistralai
+
+# Database
+duckdb
+
+# Plotting dependencies
+matplotlib
+term-image  # For terminal image display (iTerm2, Kitty, etc.)
