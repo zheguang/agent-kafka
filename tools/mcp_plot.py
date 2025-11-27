@@ -17,13 +17,6 @@ import matplotlib.pyplot as plt
 from mcp.server.fastmcp import FastMCP
 from typing import Literal
 
-# Try to import term-image for terminal display
-try:
-    from term_image.image import from_file
-    TERM_IMAGE_AVAILABLE = True
-except ImportError:
-    TERM_IMAGE_AVAILABLE = False
-
 # Set up logging
 logging.basicConfig(
     level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s"
@@ -44,8 +37,7 @@ async def generate_plot(
 ) -> str:
     """Generate a plot from query results returned by query_topic_table().
 
-    This tool displays the plot directly in the terminal (if supported) and also
-    saves it to a file for backup.
+    This tool saves the plot to a file.
 
     Args:
         query_result_json: JSON string from query_topic_table() containing data to plot.
@@ -110,30 +102,10 @@ async def generate_plot(
 
     log.info(f"Plot saved to {temp_path}")
 
-    # Try to display in terminal
-    display_status = "not displayed"
-    if TERM_IMAGE_AVAILABLE:
-        try:
-            img = from_file(temp_path)
-            print("\n" + "="*60)
-            print(f"  {title}")
-            print("="*60)
-            img.draw()
-            print("="*60 + "\n")
-            display_status = "displayed in terminal"
-            log.info("Plot displayed in terminal")
-        except Exception as e:
-            log.warning(f"Could not display plot in terminal: {e}")
-            display_status = f"terminal display failed: {str(e)}"
-    else:
-        log.warning("term-image not available. Install with: pip install term-image")
-        display_status = "term-image library not installed"
-
     return json.dumps({
         "file_path": temp_path,
         "plot_type": plot_type,
         "data_points": len(data),
-        "display_status": display_status,
         "message": f"Generated {plot_type} plot with {len(data)} data points. File: {temp_path}"
     })
 

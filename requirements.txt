@@ -1,11 +1,11 @@
 # Core MCP and Kafka dependencies
-fastmcp
-kafka-python
-mistralai
+fastmcp>=0.5.0
+kafka-python>=2.0.2
+mistralai>=1.0.0
+pydantic>=2.0.0
 
 # Database
-duckdb
+duckdb>=0.10.0
 
 # Plotting dependencies
-matplotlib
-term-image  # For terminal image display (iTerm2, Kitty, etc.)
+matplotlib>=3.8.0

@@ -12,3 +12,13 @@ Final model: result="Table for topic 'lineitem' created successfully. Query resu
     ('2025-10-27T21:43:45.916527', 'o1', 'p2')
 ]"
 ```
+
+Prompt:
+```
+Query the lineimte topic for order counts by part_id and show me a bar chart
+```
+Agent:
+```
+result='file:///tmp/tmpr_9y4bri.png'
+```
+![./test_bar_chart.png](./test_bar_chart.png)
