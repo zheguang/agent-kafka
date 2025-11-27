@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 import asyncio
 import logging
-import mistralai
 import os
 import readline
 

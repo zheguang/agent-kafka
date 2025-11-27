@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import asyncio
 import duckdb
 import json
 import logging
@@ -84,28 +83,28 @@ class ConfigResourceInput(BaseModel):
         )
 
 @mcp.tool()
-async def list_topics() -> str:
+def list_topics() -> str:
     """List available Kafka topics"""
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.list_topics)
+    result = admin.list_topics()
     return as_json(result)
 
 @mcp.tool()
-async def create_topics(new_topics: list[str]) -> str:
+def create_topics(new_topics: list[str]) -> str:
     """Create new Kafka topics"""
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.create_topics, new_topics)
+    result = admin.create_topics(new_topics)
     return as_json(result)
 
 @mcp.tool()
-async def describe_cluster() -> str:
+def describe_cluster() -> str:
     """Describe cluster-wide metadata such as the list of brokers, the controller ID, and the cluster ID."""
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.describe_cluster)
+    result = admin.describe_cluster()
     return as_json(result)
 
 @mcp.tool()
-async def describe_configs(resource_input: list[ConfigResourceInput]) -> list[dict]:
+def describe_configs(resource_input: list[ConfigResourceInput]) -> list[dict]:
     """Describe configuration for one or more Kafka resources."""
     config_resources = [r.to_config_resource() for r in resource_input]
-    result = await asyncio.get_event_loop().run_in_executor(None, admin.describe_configs, config_resources)
+    result = admin.describe_configs(config_resources)
 
     # convert result to list of dicts
     resources = [r.to_object()['resources'] for r in result]
@@ -117,7 +116,7 @@ def describe_topic_schema(topic: str) -> dict:
     return schemas[topic]
 
 @mcp.tool()
-async def create_topic_table(topic: str) -> bool:
+def create_topic_table(topic: str) -> bool:
     """Create a table view over the topic's messages."""
     with db.cursor() as cursor:
         cursor.execute(f"""
@@ -141,7 +140,7 @@ async def create_topic_table(topic: str) -> bool:
         return True
 
 @mcp.tool()
-async def query_topic_table(query: str) -> str:
+def query_topic_table(query: str) -> str:
     """Query the topic table as SQL and return results as JSON.
 
     Returns a JSON array of query results that can be passed to generate_plot().
